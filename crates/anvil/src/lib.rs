@@ -172,12 +172,12 @@ pub async fn spawn(mut config: NodeConfig) -> (EthApi, NodeHandle) {
     let mut servers = Vec::with_capacity(config.host.len());
     let mut addresses = Vec::with_capacity(config.host.len());
 
-    for addr in config.host.iter() {
-        let sock_addr = SocketAddr::new(addr.to_owned(), port);
+    for addr in &config.host {
+        let sock_addr = SocketAddr::new(*addr, port);
         addresses.push(sock_addr);
 
         // spawn the server on a new task
-        let srv = server::serve(sock_addr, api.clone(), server_config.clone()).await;
+        let srv = server::serve(sock_addr, api.clone(), server_config.clone()).await.unwrap();
         servers.push(tokio::task::spawn(srv.map_err(Into::into)));
     }
 
