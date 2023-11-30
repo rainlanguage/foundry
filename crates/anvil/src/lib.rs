@@ -169,18 +169,16 @@ pub async fn spawn(mut config: NodeConfig) -> (EthApi, NodeHandle) {
     let node_service =
         tokio::task::spawn(NodeService::new(pool, backend, miner, fee_history_service, filters));
 
-    let mut servers = Vec::new();
-    let mut addresses = Vec::new();
+    let mut servers = Vec::with_capacity(config.host.len());
+    let mut addresses = Vec::with_capacity(config.host.len());
 
     for addr in config.host.iter() {
         let sock_addr = SocketAddr::new(addr.to_owned(), port);
-        let srv = server::serve(sock_addr, api.clone(), server_config.clone());
-
-        addresses.push(srv.local_addr());
+        addresses.push(sock_addr);
 
         // spawn the server on a new task
-        let srv = tokio::task::spawn(srv.map_err(NodeError::from));
-        servers.push(srv);
+        let srv = server::serve(sock_addr, api.clone(), server_config.clone()).await;
+        servers.push(tokio::task::spawn(srv.map_err(Into::into)));
     }
 
     let tokio_handle = Handle::current();
