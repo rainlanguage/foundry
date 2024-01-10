@@ -12,7 +12,7 @@ use ethers::{
     abi::{Address, Tokenizable},
     prelude::{builders::ContractCall, decode_function_data, Middleware, SignerMiddleware},
     signers::Signer,
-    types::{Block, BlockNumber, Chain, Transaction, TransactionRequest, H256, U256},
+    types::{Block, BlockNumber, Chain, Transaction, TransactionRequest, B256, U256},
     utils::get_contract_address,
 };
 use foundry_common::types::ToAlloy;
@@ -23,7 +23,7 @@ async fn can_get_block_number() {
     let (api, handle) = spawn(NodeConfig::test()).await;
 
     let block_num = api.block_number().unwrap();
-    assert_eq!(block_num, U256::zero().to_alloy());
+    assert_eq!(block_num, U256::ZERO);
 
     let provider = handle.ethers_http_provider();
 
@@ -286,7 +286,7 @@ async fn can_call_with_state_override() {
         simple_storage.address(),
         AccountOverride {
             // The `lastSender` is in the first storage slot
-            state_diff: Some(HashMap::from([(H256::from_low_u64_be(0), account.into())])),
+            state_diff: Some(HashMap::from([(B256::from_low_u64_be(0), account.into())])),
             ..Default::default()
         },
     )]);
@@ -320,7 +320,7 @@ async fn can_call_with_state_override() {
         simple_storage.address(),
         AccountOverride {
             // The `lastSender` is in the first storage slot
-            state: Some(HashMap::from([(H256::from_low_u64_be(0), account.into())])),
+            state: Some(HashMap::from([(B256::from_low_u64_be(0), account.into())])),
             ..Default::default()
         },
     )]);

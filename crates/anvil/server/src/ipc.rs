@@ -2,7 +2,6 @@
 
 use crate::{error::RequestError, pubsub::PubSubConnection, PubSubRpcHandler};
 use anvil_rpc::request::Request;
-use bytes::BytesMut;
 use futures::{ready, Sink, Stream, StreamExt};
 use parity_tokio_ipc::Endpoint;
 use std::{
@@ -11,6 +10,7 @@ use std::{
     pin::Pin,
     task::{Context, Poll},
 };
+use tokio_util::bytes::BytesMut;
 
 /// An IPC connection for anvil
 ///

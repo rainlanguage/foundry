@@ -1,15 +1,16 @@
 //! Tests for OP chain support.
 
+use alloy_primitives::U256;
 use anvil::{spawn, Hardfork, NodeConfig};
 use ethers::{
     abi::Address,
     providers::Middleware,
     types::{
         transaction::{eip2718::TypedTransaction, optimism::DepositTransaction},
-        TransactionRequest, U256,
+        TransactionRequest,
     },
 };
-use ethers_core::types::{Bytes, H256};
+use ethers_core::types::{Bytes, B256};
 use foundry_common::types::ToAlloy;
 use std::str::FromStr;
 
@@ -32,11 +33,11 @@ async fn test_deposits_not_supported_if_optimism_disabled() {
             data: Some(Bytes::default()),
             nonce: None,
         },
-        source_hash: H256::from_str(
+        source_hash: B256::from_str(
             "0000000000000000000000000000000000000000000000000000000000000000",
         )
         .unwrap(),
-        mint: Some(U256::zero()),
+        mint: Some(U256::ZERO),
         is_system_tx: true,
     });
 
@@ -73,11 +74,11 @@ async fn test_send_value_deposit_transaction() {
             data: Some(Bytes::default()),
             nonce: None,
         },
-        source_hash: H256::from_str(
+        source_hash: B256::from_str(
             "0000000000000000000000000000000000000000000000000000000000000000",
         )
         .unwrap(),
-        mint: Some(U256::zero()),
+        mint: Some(U256::ZERO),
         is_system_tx: true,
     });
 
@@ -120,11 +121,11 @@ async fn test_send_value_raw_deposit_transaction() {
             data: Some(Bytes::default()),
             nonce: None,
         },
-        source_hash: H256::from_str(
+        source_hash: B256::from_str(
             "0000000000000000000000000000000000000000000000000000000000000000",
         )
         .unwrap(),
-        mint: Some(U256::zero()),
+        mint: Some(U256::ZERO),
         is_system_tx: true,
     });
 

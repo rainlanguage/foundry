@@ -210,7 +210,7 @@ ethers-signers = { git = "https://github.com/gakonst/ethers-rs", rev = "f0e5b194
 ethers-middleware = { git = "https://github.com/gakonst/ethers-rs", rev = "f0e5b194f09c533feb10d1a686ddb9e5946ec107" }
 ethers-solc = { git = "https://github.com/gakonst/ethers-rs", rev = "f0e5b194f09c533feb10d1a686ddb9e5946ec107" }
 
-# alloy-consensus = { git = "https://github.com/alloy-rs/alloy" }
+alloy-consensus = { git = "https://github.com/alloy-rs/alloy" }
 alloy-json-rpc = { git = "https://github.com/alloy-rs/alloy" }
 alloy-providers = { git = "https://github.com/alloy-rs/alloy" }
 alloy-pubsub = { git = "https://github.com/alloy-rs/alloy" }

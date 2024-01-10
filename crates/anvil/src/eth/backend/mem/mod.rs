@@ -80,7 +80,6 @@ use foundry_evm::{
 };
 use futures::channel::mpsc::{unbounded, UnboundedSender};
 use hash_db::HashDB;
-use itertools::Itertools;
 use parking_lot::{Mutex, RwLock};
 use std::{
     collections::{BTreeMap, HashMap},
@@ -355,10 +354,7 @@ impl Backend {
     }
 
     pub fn precompiles(&self) -> Vec<Address> {
-        get_precompiles_for(self.env.read().cfg.spec_id)
-            .into_iter()
-            .map(ToAlloy::to_alloy)
-            .collect_vec()
+        get_precompiles_for(self.env.read().cfg.spec_id).copied().collect()
     }
 
     /// Resets the fork to a fresh state
@@ -1195,10 +1191,10 @@ impl Backend {
         };
 
         let mut tracer = AccessListTracer::new(
-            EthersAccessList(request.access_list.clone().unwrap_or_default()),
+            AccessList(request.access_list.clone().unwrap_or_default()),
             from,
             to,
-            self.precompiles(),
+            &self.precompiles(),
         );
 
         let mut evm = revm::EVM::new();
@@ -1541,7 +1537,7 @@ impl Backend {
 
     /// Takes a block as it's stored internally and returns the eth api conform block format
     pub fn convert_block(&self, block: Block) -> AlloyBlock {
-        let size = U256::from(rlp::encode(&block).len() as u32);
+        let size = U256::from(alloy_rlp::encode(&block).len() as u32);
 
         let Block { header, transactions, .. } = block;
 
@@ -2185,7 +2181,7 @@ impl Backend {
 
             let maybe_account: Option<BasicAccount> = {
                 let acc_decoder = |bytes: &[u8]| {
-                    rlp::decode(bytes).unwrap_or_else(|_| {
+                    alloy_rlp::decode(bytes).unwrap_or_else(|_| {
                         panic!("prove_account_at, could not query trie for account={:?}", &address)
                     })
                 };
@@ -2203,7 +2199,7 @@ impl Backend {
                     // proof is rlp encoded:
                     // <https://github.com/foundry-rs/foundry/issues/5004>
                     // <https://www.quicknode.com/docs/ethereum/eth_getProof>
-                    rlp::encode(&record).to_vec().into()
+                    alloy_rlp::encode(&record).to_vec().into()
                 })
                 .collect::<Vec<_>>();
 
@@ -2232,7 +2228,7 @@ impl Backend {
                                         // proof is rlp encoded:
                                         // <https://github.com/foundry-rs/foundry/issues/5004>
                                         // <https://www.quicknode.com/docs/ethereum/eth_getProof>
-                                        rlp::encode(&proof).to_vec().into()
+                                        alloy_rlp::encode(&proof).to_vec().into()
                                     })
                                     .collect(),
                             },
@@ -2271,7 +2267,7 @@ impl Backend {
 /// Get max nonce from transaction pool by address
 fn get_pool_transactions_nonce(
     pool_transactions: &[Arc<PoolTransaction>],
-    address: ethers::types::H160,
+    address: ethers::types::Address,
 ) -> Option<U256> {
     let highest_nonce_tx = pool_transactions
         .iter()
@@ -2433,7 +2429,7 @@ pub fn transaction_build(
     }
 
     transaction.block_hash =
-        block.as_ref().map(|block| B256::from(keccak256(&rlp::encode(&block.header))));
+        block.as_ref().map(|block| B256::from(keccak256(&alloy_rlp::encode(&block.header))));
 
     transaction.block_number = block.as_ref().map(|block| U256::from(block.header.number.as_u64()));
 
@@ -2485,7 +2481,8 @@ pub fn prove_storage(
         .unwrap();
 
     let item: U256 = {
-        let decode_value = |bytes: &[u8]| rlp::decode(bytes).expect("decoding db value failed");
+        let decode_value =
+            |bytes: &[u8]| alloy_rlp::decode(bytes).expect("decoding db value failed");
         let query = (&mut recorder, decode_value);
         trie.get_with(storage_key.to_ethers().as_bytes(), query)
             .map_err(|err| BlockchainError::TrieError(err.to_string()))?

@@ -1,4 +1,4 @@
-use ethers_core::types::{Address, Bytes, H256, U256};
+use alloy_primitives::{Address, Bytes, B256, U256};
 use std::collections::HashMap;
 
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
@@ -9,8 +9,8 @@ pub struct AccountOverride {
     pub nonce: Option<u64>,
     pub code: Option<Bytes>,
     pub balance: Option<U256>,
-    pub state: Option<HashMap<H256, H256>>,
-    pub state_diff: Option<HashMap<H256, H256>>,
+    pub state: Option<HashMap<B256, B256>>,
+    pub state_diff: Option<HashMap<B256, B256>>,
 }
 
 pub type StateOverride = HashMap<Address, AccountOverride>;

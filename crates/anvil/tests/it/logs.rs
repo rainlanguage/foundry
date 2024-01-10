@@ -4,7 +4,7 @@ use crate::abi::*;
 use anvil::{spawn, NodeConfig};
 use ethers::{
     middleware::SignerMiddleware,
-    prelude::{BlockNumber, Filter, FilterKind, Middleware, Signer, H256},
+    prelude::{BlockNumber, Filter, FilterKind, Middleware, Signer, B256},
     types::Log,
 };
 use futures::StreamExt;
@@ -25,7 +25,7 @@ async fn get_past_events() {
         .await
         .unwrap();
 
-    let func = contract.method::<_, H256>("setValue", "hi".to_owned()).unwrap();
+    let func = contract.method::<_, B256>("setValue", "hi".to_owned()).unwrap();
     let tx = func.send().await.unwrap();
     let _receipt = tx.await.unwrap();
 
@@ -73,7 +73,7 @@ async fn get_all_events() {
     // spread logs across several blocks
     let num_tx = 10;
     for _ in 0..num_tx {
-        let func = contract.method::<_, H256>("setValue", "hi".to_owned()).unwrap();
+        let func = contract.method::<_, B256>("setValue", "hi".to_owned()).unwrap();
         let tx = func.send().await.unwrap();
         api.mine_one().await;
         let _receipt = tx.await.unwrap();
@@ -111,7 +111,7 @@ async fn can_install_filter() {
     // create some logs
     let num_logs = 10;
     for _ in 0..num_logs {
-        let func = contract.method::<_, H256>("setValue", "hi".to_owned()).unwrap();
+        let func = contract.method::<_, B256>("setValue", "hi".to_owned()).unwrap();
         let tx = func.send().await.unwrap();
         api.mine_one().await;
         let _receipt = tx.await.unwrap();
@@ -155,7 +155,7 @@ async fn watch_events() {
     // and we make a few calls
     let num = client.get_block_number().await.unwrap();
     for i in 0..num_calls {
-        let call = contract.method::<_, H256>("setValue", i.to_string()).unwrap().legacy();
+        let call = contract.method::<_, B256>("setValue", i.to_string()).unwrap().legacy();
         let pending_tx = call.send().await.unwrap();
         let _receipt = pending_tx.await.unwrap();
     }

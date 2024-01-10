@@ -14,19 +14,21 @@ foundry-common.workspace = true
 foundry-evm.workspace = true
 revm = { workspace = true, default-features = false, features = ["std", "serde", "memory_limit"] }
 
-alloy-primitives = { workspace = true, features = ["serde"] }
-alloy-rpc-types = { workspace = true }
+alloy-consensus.workspace = true
+alloy-primitives = { workspace = true, features = ["serde", "rlp", "k256"] }
+alloy-rpc-types.workspace = true
 alloy-rpc-trace-types.workspace = true
+alloy-rlp.workspace = true
+
 ethers-core = { workspace = true, features = ["optimism"] }
 # theses are not used by anvil-core, but are required by ethers, because pulled in via foundry-common
 ethers-contract = { workspace = true, features = ["optimism"] }
 ethers-providers = { workspace = true, features = ["optimism"] }
 ethers-middleware = { workspace = true, features = ["optimism"] }
 
+rand.workspace = true
 serde = { workspace = true, optional = true }
 serde_json.workspace = true
-bytes = "1.4"
-open-fastrlp = { version = "0.1.4", optional = true }
 
 # trie
 hash-db = { version = "0.15", default-features = false }
@@ -41,5 +43,4 @@ anvil-core = { path = ".", features = ["serde"] }
 [features]
 default = ["serde"]
 impersonated-tx = []
-fastrlp = ["dep:open-fastrlp"]
 serde = ["dep:serde"]

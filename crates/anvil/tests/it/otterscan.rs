@@ -330,7 +330,7 @@ contract Contract {
                 depth: 1,
                 from: contract.address().to_alloy(),
                 to: contract.address().to_alloy(),
-                value: U256::zero().to_alloy(),
+                value: U256::ZERO,
                 input: Bytes::from_str("0x6a6758fe").unwrap().0.into()
             },
             OtsTrace {
@@ -338,7 +338,7 @@ contract Contract {
                 depth: 1,
                 from: contract.address().to_alloy(),
                 to: contract.address().to_alloy(),
-                value: U256::zero().to_alloy(),
+                value: U256::ZERO,
                 input: Bytes::from_str("0x96385e39").unwrap().0.into()
             },
             OtsTrace {
@@ -354,7 +354,7 @@ contract Contract {
                 depth: 2,
                 from: contract.address().to_alloy(),
                 to: contract.address().to_alloy(),
-                value: U256::zero().to_alloy(),
+                value: U256::ZERO,
                 input: Bytes::from_str("0xa1325397").unwrap().0.into()
             },
         ]

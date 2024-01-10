@@ -14,7 +14,7 @@ use anvil_core::eth::{
 };
 use ethers::{
     abi::ethereum_types::BloomInput,
-    types::{Bloom, H256, U256},
+    types::{Bloom, B256, U256},
     utils::rlp,
 };
 use foundry_common::types::{ToAlloy, ToEthers};
@@ -105,7 +105,7 @@ pub struct TransactionExecutor<'a, Db: ?Sized, Validator: TransactionValidator> 
     pub pending: std::vec::IntoIter<Arc<PoolTransaction>>,
     pub block_env: BlockEnv,
     pub cfg_env: CfgEnv,
-    pub parent_hash: H256,
+    pub parent_hash: B256,
     /// Cumulative gas used by all executed transactions
     pub gas_used: U256,
     pub enable_steps_tracing: bool,
@@ -118,7 +118,7 @@ impl<'a, DB: Db + ?Sized, Validator: TransactionValidator> TransactionExecutor<'
         let mut transaction_infos = Vec::new();
         let mut receipts = Vec::new();
         let mut bloom = Bloom::default();
-        let mut cumulative_gas_used = U256::zero();
+        let mut cumulative_gas_used = U256::ZERO;
         let mut invalid = Vec::new();
         let mut included = Vec::new();
         let gas_limit = self.block_env.gas_limit;
@@ -188,7 +188,7 @@ impl<'a, DB: Db + ?Sized, Validator: TransactionValidator> TransactionExecutor<'
         }
 
         let ommers: Vec<Header> = Vec::new();
-        let receipts_root = trie::ordered_trie_root(receipts.iter().map(rlp::encode));
+        let receipts_root = trie::ordered_trie_root(receipts.iter().map(alloy_rlp::encode));
 
         let partial_header = PartialHeader {
             parent_hash,

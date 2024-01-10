@@ -1,15 +1,9 @@
-use ethers::abi::Address;
-use foundry_common::types::ToEthers;
+use alloy_primitives::Address;
 use foundry_evm::revm::{self, precompile::Precompiles, primitives::SpecId};
 use std::fmt;
 
-pub fn get_precompiles_for(spec_id: SpecId) -> Vec<Address> {
-    Precompiles::new(to_precompile_id(spec_id))
-        .addresses()
-        .into_iter()
-        .copied()
-        .map(|item| item.to_ethers())
-        .collect()
+pub fn get_precompiles_for(spec_id: SpecId) -> impl Iterator<Item = &'static Address> {
+    Precompiles::new(to_precompile_id(spec_id)).addresses().into_iter()
 }
 
 /// wrapper type that displays byte as hex

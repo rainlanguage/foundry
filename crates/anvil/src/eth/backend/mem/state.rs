@@ -4,7 +4,7 @@ use crate::eth::{backend::db::AsHashDB, error::BlockchainError};
 use alloy_primitives::{Address, Bytes, B256, U256 as rU256};
 use alloy_rpc_types::state::StateOverride;
 use anvil_core::eth::trie::RefSecTrieDBMut;
-use ethers::utils::{rlp, rlp::RlpStream};
+use ethers::utils::{alloy_rlp::RlpStream, rlp};
 use foundry_common::types::ToEthers;
 use foundry_evm::{
     backend::DatabaseError,
@@ -49,7 +49,7 @@ pub fn storage_trie_db(storage: &Map<rU256, rU256>) -> (AsHashDB, B256) {
                 let mut temp: [u8; 32] = [0; 32];
                 (*k).to_ethers().to_big_endian(&mut temp);
                 let key = B256::from(temp).to_ethers();
-                let value = rlp::encode(&(*v).to_ethers());
+                let value = alloy_rlp::encode(&(*v).to_ethers());
                 trie.insert(key.as_bytes(), value.as_ref()).unwrap();
             }
         }

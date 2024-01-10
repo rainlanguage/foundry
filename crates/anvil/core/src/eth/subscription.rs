@@ -1,11 +1,9 @@
 //! Subscription types
 
-use crate::eth::block::Header;
-use ethers_core::{
-    rand::{distributions::Alphanumeric, thread_rng, Rng},
-    types::{Filter, Log, TxHash},
-    utils::hex,
-};
+use alloy_primitives::hex;
+use alloy_rpc_types::Header;
+use ethers_core::types::{Filter, Log, TxHash};
+use rand::{distributions::Alphanumeric, thread_rng, Rng};
 use std::fmt;
 
 /// Result of a subscription

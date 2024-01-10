@@ -12,7 +12,7 @@ use ethers::{
         transaction::{
             eip2718::TypedTransaction as EthersTypedTransactionRequest, eip712::TypedData,
         },
-        Signature, H256, U256,
+        Signature, B256, U256,
     },
 };
 use std::collections::HashMap;
@@ -148,12 +148,12 @@ pub fn build_typed_transaction(
                 r: {
                     let mut rarr = [0_u8; 32];
                     signature.r.to_big_endian(&mut rarr);
-                    H256::from(rarr)
+                    B256::from(rarr)
                 },
                 s: {
                     let mut sarr = [0_u8; 32];
                     signature.s.to_big_endian(&mut sarr);
-                    H256::from(sarr)
+                    B256::from(sarr)
                 },
             })
         }
@@ -186,12 +186,12 @@ pub fn build_typed_transaction(
                 r: {
                     let mut rarr = [0u8; 32];
                     signature.r.to_big_endian(&mut rarr);
-                    H256::from(rarr)
+                    B256::from(rarr)
                 },
                 s: {
                     let mut sarr = [0u8; 32];
                     signature.s.to_big_endian(&mut sarr);
-                    H256::from(sarr)
+                    B256::from(sarr)
                 },
             })
         }
@@ -216,7 +216,7 @@ pub fn build_typed_transaction(
                 source_hash,
                 mint,
                 is_system_tx,
-                nonce: U256::zero(),
+                nonce: U256::ZERO,
             })
         }
     };

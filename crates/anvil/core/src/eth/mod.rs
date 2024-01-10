@@ -9,23 +9,17 @@ use alloy_rpc_types::{
     state::StateOverride,
     BlockId, BlockNumberOrTag as BlockNumber, CallRequest, Filter,
 };
-use ethers_core::types::transaction::eip712::TypedData;
 
-pub mod block;
 pub mod proof;
-pub mod receipt;
 pub mod state;
 pub mod subscription;
-pub mod transaction;
 pub mod trie;
-pub mod utils;
 
 #[cfg(feature = "serde")]
 pub mod serde_helpers;
 
 #[cfg(feature = "serde")]
 use self::serde_helpers::*;
-use self::transaction::EthTransactionRequest;
 
 #[cfg(feature = "serde")]
 use foundry_common::serde_helpers::{

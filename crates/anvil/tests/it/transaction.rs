@@ -8,7 +8,7 @@ use ethers::{
     },
     types::{
         transaction::eip2930::{AccessList, AccessListItem},
-        Address, BlockNumber, Transaction, TransactionReceipt, H256, U256,
+        Address, BlockNumber, Transaction, TransactionReceipt, B256, U256,
     },
 };
 use foundry_common::types::{to_call_request_from_tx_request, ToAlloy, ToEthers};
@@ -461,7 +461,7 @@ async fn call_past_state() {
 
     // make a call with `client`
     let _tx_hash = contract
-        .method::<_, H256>("setValue", "hi".to_owned())
+        .method::<_, B256>("setValue", "hi".to_owned())
         .unwrap()
         .send()
         .await
@@ -651,7 +651,7 @@ async fn test_first_noce_is_zero() {
         .await
         .unwrap();
 
-    assert_eq!(nonce, U256::zero());
+    assert_eq!(nonce, U256::ZERO);
 }
 
 #[tokio::test(flavor = "multi_thread")]
@@ -882,8 +882,8 @@ async fn test_tx_access_list() {
         AccessList::from(vec![AccessListItem {
             address: simple_storage.address(),
             storage_keys: vec![
-                H256::zero(),
-                H256::from_uint(&(1u64.into())),
+                B256::zero(),
+                B256::from_uint(&(1u64.into())),
                 "0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6"
                     .parse()
                     .unwrap(),
@@ -915,8 +915,8 @@ async fn test_tx_access_list() {
         AccessList::from(vec![AccessListItem {
             address: simple_storage.address(),
             storage_keys: vec![
-                H256::zero(),
-                H256::from_uint(&(1u64.into())),
+                B256::zero(),
+                B256::from_uint(&(1u64.into())),
                 "0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6"
                     .parse()
                     .unwrap(),

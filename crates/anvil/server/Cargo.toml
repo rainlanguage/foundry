@@ -27,7 +27,6 @@ futures = "0.3"
 
 # ipc
 parity-tokio-ipc = { version = "0.9", optional = true }
-bytes = { version = "1.4", optional = true }
 tokio-util = { version = "0.7", features = ["codec"], optional = true }
 
 # misc
@@ -41,4 +40,4 @@ pin-project = "1"
 
 [features]
 default = ["ipc"]
-ipc = ["parity-tokio-ipc", "bytes", "tokio-util"]
+ipc = ["dep:parity-tokio-ipc", "dep:tokio-util"]

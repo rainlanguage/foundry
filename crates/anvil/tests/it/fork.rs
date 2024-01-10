@@ -962,7 +962,7 @@ async fn test_total_difficulty_fork() {
 
     let block = provider.get_block(BlockNumber::Latest).await.unwrap().unwrap();
     assert_eq!(block.total_difficulty, Some(next_total_difficulty));
-    assert_eq!(block.difficulty, U256::zero());
+    assert_eq!(block.difficulty, U256::ZERO);
 }
 
 // <https://etherscan.io/block/14608400>

@@ -1,6 +1,5 @@
 use alloy_primitives::{Address, B256};
-use ethers_core::types::transaction::eip2930::{AccessList, AccessListItem};
-use foundry_common::types::{ToAlloy, ToEthers};
+use alloy_rpc_types::{AccessList, AccessListItem};
 use hashbrown::{HashMap, HashSet};
 use revm::{
     interpreter::{opcode, Interpreter},
@@ -19,30 +18,25 @@ impl AccessListTracer {
         access_list: AccessList,
         from: Address,
         to: Address,
-        precompiles: Vec<Address>,
+        precompiles: &[Address],
     ) -> Self {
         AccessListTracer {
-            excluded: [from, to].iter().chain(precompiles.iter()).copied().collect(),
+            excluded: [from, to].into_iter().chain(precompiles.iter().copied()).collect(),
             access_list: access_list
                 .0
-                .iter()
-                .map(|v| {
-                    (
-                        v.address.to_alloy(),
-                        v.storage_keys.iter().copied().map(|v| v.to_alloy()).collect(),
-                    )
-                })
+                .into_iter()
+                .map(|item| (item.address, item.storage_keys.into_iter().collect()))
                 .collect(),
         }
     }
 
     pub fn access_list(&self) -> AccessList {
-        AccessList::from(
+        AccessList(
             self.access_list
                 .iter()
                 .map(|(address, slots)| AccessListItem {
-                    address: address.to_ethers(),
-                    storage_keys: slots.iter().copied().map(|k| k.to_ethers()).collect(),
+                    address: *address,
+                    storage_keys: slots.iter().copied().collect(),
                 })
                 .collect::<Vec<AccessListItem>>(),
         )

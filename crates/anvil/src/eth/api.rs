@@ -417,11 +417,8 @@ impl EthApi {
     ) -> Result<TypedTransaction> {
         match request {
             TypedTransactionRequest::Deposit(_) => {
-                const NIL_SIGNATURE: ethers::types::Signature = ethers::types::Signature {
-                    r: ethers::types::U256::zero(),
-                    s: ethers::types::U256::zero(),
-                    v: 0,
-                };
+                const NIL_SIGNATURE: ethers::types::Signature =
+                    ethers::types::Signature { r: U256::ZERO, s: U256::ZERO, v: 0 };
                 return build_typed_transaction(request, NIL_SIGNATURE)
             }
             _ => {
@@ -926,7 +923,7 @@ impl EthApi {
         }
         let transaction = if data[0] > 0x7f {
             // legacy transaction
-            match rlp::decode::<LegacyTransaction>(data) {
+            match alloy_rlp::decode::<LegacyTransaction>(data) {
                 Ok(transaction) => TypedTransaction::Legacy(transaction),
                 Err(_) => return Err(BlockchainError::FailedToDecodeSignedTransaction),
             }
@@ -935,8 +932,8 @@ impl EthApi {
             // but EIP-1559 prepends a version byte, so we need to encode the data first to get a
             // valid rlp and then rlp decode impl of `TypedTransaction` will remove and check the
             // version byte
-            let extend = rlp::encode(&data);
-            let tx = match rlp::decode::<TypedTransaction>(&extend[..]) {
+            let extend = alloy_rlp::encode(&data);
+            let tx = match alloy_rlp::decode::<TypedTransaction>(&extend[..]) {
                 Ok(transaction) => transaction,
                 Err(_) => return Err(BlockchainError::FailedToDecodeSignedTransaction),
             };

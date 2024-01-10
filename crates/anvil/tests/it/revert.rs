@@ -122,7 +122,7 @@ async fn test_solc_revert_example() {
     );
 
     for fun in ["buyRevert", "buyRequire"] {
-        let resp = contract.method::<_, ()>(fun, U256::zero()).unwrap().call().await;
+        let resp = contract.method::<_, ()>(fun, U256::ZERO).unwrap().call().await;
         resp.unwrap();
 
         let ten = WEI_IN_ETHER.saturating_mul(10u64.into());
@@ -174,7 +174,7 @@ contract Contract {
         abi.unwrap(),
         SignerMiddleware::new(handle.http_provider(), wallets[1].clone()),
     );
-    let call = contract.method::<_, ()>("setNumber", U256::zero()).unwrap();
+    let call = contract.method::<_, ()>("setNumber", U256::ZERO).unwrap();
     let resp = call.send().await;
 
     let err = resp.unwrap_err();

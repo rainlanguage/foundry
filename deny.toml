@@ -24,9 +24,7 @@ multiple-versions = "warn"
 wildcards = "allow"
 highlight = "all"
 # List of crates to deny
-deny = [
-    { name = "openssl" },
-]
+deny = [{ name = "openssl" }]
 # Certain crates/versions that will be skipped when doing duplicate detection.
 skip = []
 # Similarly to `skip` allows you to skip certain crates during duplicate
@@ -71,9 +69,6 @@ exceptions = [
     { allow = ["CC0-1.0"], name = "constant_time_eq" },
     { allow = ["CC0-1.0"], name = "dunce" },
     { allow = ["CC0-1.0"], name = "aurora-engine-modexp" },
-
-    { allow = ["GPL-3.0"], name = "fastrlp" },
-    { allow = ["GPL-3.0"], name = "fastrlp-derive" },
 ]
 #copyleft = "deny"
 
@@ -82,16 +77,13 @@ exceptions = [
 name = "unicode-ident"
 version = "*"
 expression = "(MIT OR Apache-2.0) AND Unicode-DFS-2016"
-license-files = [
-    { path = "LICENSE-UNICODE", hash = 0x3fb01745 }
-]
+license-files = [{ path = "LICENSE-UNICODE", hash = 0x3fb01745 }]
+
 [[licenses.clarify]]
 name = "ring"
 version = "*"
 expression = "OpenSSL"
-license-files = [
-    { path = "LICENSE", hash = 0xbd0eed23 }
-]
+license-files = [{ path = "LICENSE", hash = 0xbd0eed23 }]
 
 # This section is considered when running `cargo deny check sources`.
 # More documentation about the 'sources' section can be found here:

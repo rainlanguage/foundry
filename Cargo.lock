@@ -88,6 +88,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "alloy-consensus"
+version = "0.1.0"
+source = "git+https://github.com/alloy-rs/alloy#50e38e845afb27fc311a74d2260dd087f8e972f3"
+dependencies = [
+ "alloy-eips",
+ "alloy-network",
+ "alloy-primitives",
+ "alloy-rlp",
+]
+
+[[package]]
 name = "alloy-dyn-abi"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -474,6 +485,7 @@ name = "anvil"
 version = "0.2.0"
 dependencies = [
  "alloy-chains",
+ "alloy-consensus",
  "alloy-primitives",
  "alloy-providers",
  "alloy-rpc-trace-types",
@@ -485,7 +497,6 @@ dependencies = [
  "async-trait",
  "auto_impl",
  "axum",
- "bytes",
  "chrono",
  "clap",
  "clap_complete",
@@ -529,11 +540,12 @@ dependencies = [
 name = "anvil-core"
 version = "0.2.0"
 dependencies = [
+ "alloy-consensus",
  "alloy-primitives",
+ "alloy-rlp",
  "alloy-rpc-trace-types",
  "alloy-rpc-types",
  "anvil-core",
- "bytes",
  "ethers-contract",
  "ethers-core",
  "ethers-middleware",
@@ -543,7 +555,7 @@ dependencies = [
  "hash-db",
  "hash256-std-hasher",
  "keccak-hasher",
- "open-fastrlp",
+ "rand 0.8.5",
  "reference-trie",
  "revm",
  "serde",
@@ -567,7 +579,6 @@ dependencies = [
  "anvil-rpc",
  "async-trait",
  "axum",
- "bytes",
  "clap",
  "futures",
  "hyper",
@@ -3142,6 +3153,7 @@ dependencies = [
  "alloy-dyn-abi",
  "alloy-json-abi",
  "alloy-primitives",
+ "alloy-rpc-types",
  "alloy-sol-types",
  "const-hex",
  "ethers-core",

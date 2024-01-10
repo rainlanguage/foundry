@@ -11,7 +11,7 @@ use ethers::{
     prelude::{Middleware, SignerMiddleware},
     types::{
         transaction::eip2718::TypedTransaction, Address, BlockNumber, Eip1559TransactionRequest,
-        TransactionRequest, H256, U256, U64,
+        TransactionRequest, B256, U256, U64,
     },
     utils::hex,
 };
@@ -61,7 +61,7 @@ async fn can_set_storage() {
 
     let storage_value = api.storage_at(addr, slot, None).await.unwrap();
     assert_eq!(val, storage_value);
-    assert_eq!(val.to_ethers(), H256::from_uint(&U256::from(12345)));
+    assert_eq!(val.to_ethers(), B256::from_uint(&U256::from(12345)));
 }
 
 #[tokio::test(flavor = "multi_thread")]
@@ -408,7 +408,7 @@ async fn test_can_set_storage_bsc_fork() {
     let busd_addr: Address = "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56".parse().unwrap();
     let idx: U256 =
         "0xa6eef7e35abe7026729641147f7915573c7e97b47efa546f5f6e3230263bcb49".parse().unwrap();
-    let value: H256 =
+    let value: B256 =
         "0x0000000000000000000000000000000000000000000000000000000000003039".parse().unwrap();
 
     api.anvil_set_storage_at(busd_addr.to_alloy(), idx.to_alloy(), value.to_alloy()).await.unwrap();
