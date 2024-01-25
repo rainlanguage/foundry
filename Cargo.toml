@@ -74,7 +74,7 @@ ethers-solc = { git = "https://github.com/gakonst/ethers-rs", default-features =
 
 solang-parser = "=0.3.0"
 
-[patch.crates-io]
+# [patch.crates-io]
 # ethers = { path = "../ethers-rs/ethers" }
 # ethers-addressbook = { path = "../ethers-rs/ethers-addressbook" }
 # ethers-contract = { path = "../ethers-rs/ethers-contract" }
@@ -85,4 +85,4 @@ solang-parser = "=0.3.0"
 # ethers-providers = { path = "../ethers-rs/ethers-providers" }
 # ethers-signers = { path = "../ethers-rs/ethers-signers" }
 # ethers-solc = { path = "../ethers-rs/ethers-solc" }
-revm = { git = "https://github.com/bluealloy/revm/", rev = "88337924f4d16ed1f5e4cde12a03d0cb755cd658" }
+# revm = { git = "https://github.com/bluealloy/revm/", rev = "88337924f4d16ed1f5e4cde12a03d0cb755cd658" }

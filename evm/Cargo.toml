@@ -37,7 +37,7 @@ once_cell = "1"
 # EVM
 bytes = "1"
 hashbrown = { version = "0.13", features = ["serde"] }
-revm = { version = "3", default-features = false, features = [
+revm = { git = "https://github.com/bluealloy/revm/", rev = "88337924f4d16ed1f5e4cde12a03d0cb755cd658", default-features = false, features = [
   "std",
   "serde",
   "memory_limit",

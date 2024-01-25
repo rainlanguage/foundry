@@ -44,7 +44,7 @@ serde = "1"
 serde_json = { version = "1", features = ["raw_value"] }
 semver = "1"
 bytes = "1"
-revm = "3"
+revm = { git = "https://github.com/bluealloy/revm/", rev = "88337924f4d16ed1f5e4cde12a03d0cb755cd658" }
 eyre = "0.6"
 dirs = "5"
 time = { version = "0.3", features = ["formatting"] }
