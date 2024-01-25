@@ -61,16 +61,16 @@ panic = "abort"
 codegen-units = 1
 
 [workspace.dependencies]
-ethers = { git = "https://github.com/gakonst/ethers-rs", default-features = false }
-ethers-addressbook = { git = "https://github.com/gakonst/ethers-rs", default-features = false }
-ethers-core = { git = "https://github.com/gakonst/ethers-rs", default-features = false }
-ethers-contract = { git = "https://github.com/gakonst/ethers-rs", default-features = false }
-ethers-contract-abigen = { git = "https://github.com/gakonst/ethers-rs", default-features = false }
-ethers-providers = { git = "https://github.com/gakonst/ethers-rs", default-features = false }
-ethers-signers = { git = "https://github.com/gakonst/ethers-rs", default-features = false }
-ethers-middleware = { git = "https://github.com/gakonst/ethers-rs", default-features = false }
-ethers-etherscan = { git = "https://github.com/gakonst/ethers-rs", default-features = false }
-ethers-solc = { git = "https://github.com/gakonst/ethers-rs", default-features = false }
+ethers = { git = "https://github.com/gakonst/ethers-rs", default-features = false, rev = "b730b74a1c8d142d334aef71c949248139dd0d47" }
+ethers-addressbook = { git = "https://github.com/gakonst/ethers-rs", default-features = false, rev = "b730b74a1c8d142d334aef71c949248139dd0d47" }
+ethers-core = { git = "https://github.com/gakonst/ethers-rs", default-features = false, rev = "b730b74a1c8d142d334aef71c949248139dd0d47" }
+ethers-contract = { git = "https://github.com/gakonst/ethers-rs", default-features = false, rev = "b730b74a1c8d142d334aef71c949248139dd0d47" }
+ethers-contract-abigen = { git = "https://github.com/gakonst/ethers-rs", default-features = false, rev = "b730b74a1c8d142d334aef71c949248139dd0d47" }
+ethers-providers = { git = "https://github.com/gakonst/ethers-rs", default-features = false, rev = "b730b74a1c8d142d334aef71c949248139dd0d47" }
+ethers-signers = { git = "https://github.com/gakonst/ethers-rs", default-features = false, rev = "b730b74a1c8d142d334aef71c949248139dd0d47" }
+ethers-middleware = { git = "https://github.com/gakonst/ethers-rs", default-features = false, rev = "b730b74a1c8d142d334aef71c949248139dd0d47" }
+ethers-etherscan = { git = "https://github.com/gakonst/ethers-rs", default-features = false, rev = "b730b74a1c8d142d334aef71c949248139dd0d47" }
+ethers-solc = { git = "https://github.com/gakonst/ethers-rs", default-features = false, rev = "b730b74a1c8d142d334aef71c949248139dd0d47" }
 
 solang-parser = "=0.3.0"
 
@@ -85,4 +85,4 @@ solang-parser = "=0.3.0"
 # ethers-providers = { path = "../ethers-rs/ethers-providers" }
 # ethers-signers = { path = "../ethers-rs/ethers-signers" }
 # ethers-solc = { path = "../ethers-rs/ethers-solc" }
-revm = { git = "https://github.com/bluealloy/revm/", branch = "release/v25" }
+revm = { git = "https://github.com/bluealloy/revm/", rev = "88337924f4d16ed1f5e4cde12a03d0cb755cd658" }
